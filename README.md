@@ -1,1 +1,1 @@
-nft collection dapp
+nft collection dappnp
