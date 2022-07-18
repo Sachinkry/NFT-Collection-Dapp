@@ -47,16 +47,16 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     }
 
     // start presale nft sale
-    function startPresale() external onlyOwner {
+    function startPresale() public onlyOwner {
         presaleStarted = true;
         presaleEnded = block.timestamp + 5 minutes;
     }
     
 
     // presale nft mint
-    function presaleMint() external payable onlyWhenNotPaused {
+    function presaleMint() public payable onlyWhenNotPaused {
         require(presaleStarted && block.timestamp < presaleEnded, "presale not started" );
-        require(whitelist.whitelistAddresses(msg.sender), "you are not whitelisted");
+        require(whitelist.whitelistedAddresses(msg.sender), "you are not whitelisted");
         require(tokenIds < maxTokenIds, "exceeded max CryptoDevs supply");
         require(msg.value >= _price, "not paying enough eth");
 
@@ -65,7 +65,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     }
 
     // nft mint for others
-    function mint() external payable onlyWhenNotPaused {
+    function mint() public payable onlyWhenNotPaused {
         require(presaleStarted && block.timestamp  >= presaleEnded, "presale is going on");
         require(tokenIds < maxTokenIds, "exceeded max CryptoDevs supply");
         require(msg.value >= _price, "not paying enough eth");
