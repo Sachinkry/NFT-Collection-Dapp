@@ -219,6 +219,31 @@ export default function Home() {
     }
   }
 
+  // start presale
+  const startPresale = async () => {
+    try {
+      // We need a Signer here since this is a 'write' transaction.
+      const signer = await getProviderOrSigner(true);
+      // Create a new instance of the Contract with a Signer, which allows
+      // update methods
+      const whitelistContract = new Contract(
+        NFT_CONTRACT_ADDRESS,
+        abi,
+        signer
+      );
+      // call the startPresale from the contract
+      const tx = await whitelistContract.startPresale();
+      setLoading(true);
+      // wait for the transaction to get mined
+      await tx.wait();
+      setLoading(false);
+      // set the presale started to true
+      await checkIfPresaleStarted();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const renderButton = () => {
 
     if (!walletConnected) {
@@ -235,7 +260,7 @@ export default function Home() {
 
     if (isOwner && !presaleStarted) {
       return (
-        <button className={styles.button} >Start Presale</button>
+        <button className={styles.button} onClick={startPresale}>Start Presale</button>
       )
     } else if (!isOwner && !presaleStarted) {
       return (
