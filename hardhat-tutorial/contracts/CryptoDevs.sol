@@ -81,6 +81,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     function _setPaused(bool val) public onlyOwner {
         _paused = val;
     }
+    
 
     // withdraw function : all ether from the contract to the owner
     function withdraw() public onlyOwner {

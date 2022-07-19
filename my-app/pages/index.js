@@ -60,8 +60,8 @@ export default function Home() {
     console.log(walletConnected);
     connectWallet();
 
-    checkIfPresaleStarted();
-    if (presaleStarted) {
+    const _presaleStarted = checkIfPresaleStarted();
+    if (_presaleStarted) {
       checkIfPresaleEnded();
     }
 
@@ -226,6 +226,13 @@ export default function Home() {
         <button className={styles.button} onClick={connectWallet}>Connect Wallet</button>
       )
     }
+
+    if (loading) {
+      return (
+        <button className={styles.button}>Loading...</button>
+      )
+    }
+
     if (isOwner && !presaleStarted) {
       return (
         <button className={styles.button} >Start Presale</button>
@@ -245,7 +252,7 @@ export default function Home() {
       )
     }
 
-    if (presaleEnded) {
+    if (presaleStarted && presaleEnded) {
       return (
         // show Public mint button
         <div>
