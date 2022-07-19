@@ -223,7 +223,7 @@ export default function Home() {
   const startPresale = async () => {
     try {
       // We need a Signer here since this is a 'write' transaction.
-      const signer = await getProviderOrSigner(true);
+      const signer = await getSignerOrProvider(true);
       // Create a new instance of the Contract with a Signer, which allows
       // update methods
       const whitelistContract = new Contract(
